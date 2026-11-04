@@ -20,6 +20,19 @@ export const getProfile = async (usernamePayload: string, id?: number) => {
 };
 
 export const followUser = async (usernamePayload: string, id: number) => {
+  const existing = await prisma.user.findUnique({
+    where: {
+      username: usernamePayload,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!existing) {
+    throw new HttpException(404, {});
+  }
+
   const profile = await prisma.user.update({
     where: {
       username: usernamePayload,
@@ -40,6 +53,19 @@ export const followUser = async (usernamePayload: string, id: number) => {
 };
 
 export const unfollowUser = async (usernamePayload: string, id: number) => {
+  const existing = await prisma.user.findUnique({
+    where: {
+      username: usernamePayload,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!existing) {
+    throw new HttpException(404, {});
+  }
+
   const profile = await prisma.user.update({
     where: {
       username: usernamePayload,
