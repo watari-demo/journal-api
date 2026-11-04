@@ -38,7 +38,7 @@ const checkUserUniqueness = async (email: string, username: string) => {
 export const createUser = async (input: RegisterInput): Promise<RegisteredUser> => {
   const email = input.email?.trim();
   const username = input.username?.trim();
-  const password = input.password?.trim();
+  const password = input.password;
   const { image, bio, demo } = input;
 
   if (!email) {
@@ -83,7 +83,7 @@ export const createUser = async (input: RegisterInput): Promise<RegisteredUser> 
 
 export const login = async (userPayload: any) => {
   const email = userPayload.email?.trim();
-  const password = userPayload.password?.trim();
+  const password = userPayload.password;
 
   if (!email) {
     throw new HttpException(422, { errors: { email: ["can't be blank"] } });
