@@ -93,9 +93,9 @@ export const login = async (userPayload: any) => {
     throw new HttpException(422, { errors: { password: ["can't be blank"] } });
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
-      email,
+      email: { equals: email, mode: 'insensitive' },
     },
     select: {
       id: true,
